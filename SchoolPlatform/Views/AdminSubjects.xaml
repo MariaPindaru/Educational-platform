@@ -1,0 +1,188 @@
+﻿<Page x:Class="SchoolPlatform.Views.AdminSubjects"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SchoolPlatform.ViewModels"
+      xmlns:localConverter="clr-namespace:SchoolPlatform.Converters"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AdminSubjects">
+
+    <Page.DataContext>
+        <local:AdminLogVM/>
+    </Page.DataContext>
+
+    <Page.Resources>
+        <localConverter:SubjectConverter x:Key="subj"/>
+        <localConverter:SubjectProfessorConverter x:Key="sp"/>
+        <Style x:Key="cellText" TargetType="{x:Type TextBlock}" >
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+
+        <Style x:Key="header" TargetType="DataGridColumnHeader">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="ClickMode" Value="Hover"/>
+        </Style>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" 
+                    Content="Materie noua" Style="{StaticResource myButtonStyle}"
+                    Click="Button_Click"/>
+
+            <Button Grid.Column="1" 
+                   Content="Adauga materie" Style="{StaticResource myButtonStyle}"
+                   Command="{Binding AddSubject}">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource subj}">
+                        <Binding ElementName="datagrid1" Path="SelectedItem.SubjectID"/>
+                        <Binding ElementName="subject" Path="Text"/>
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
+            <Button Grid.Column="2" 
+                    Content="Salveaza materia" Style="{StaticResource myButtonStyle}"
+                    Command="{Binding UpdateSubject}" >
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource subj}">
+                        <Binding ElementName="datagrid1" Path="SelectedItem.SubjectID"/>
+                        <Binding ElementName="subject" Path="Text"/>
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
+
+            <Button Grid.Column="3" 
+                    Content="Sterge materie" Style="{StaticResource myButtonStyle}"
+                    Command="{Binding DeleteSubject}" 
+                    CommandParameter="{Binding ElementName=datagrid1,Path=SelectedItem}"/>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" 
+                   Content="Adauga legatura" Style="{StaticResource myButtonStyle}"
+                   Command="{Binding AddLinkSP}" >
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource sp}">
+                        <Binding ElementName="datagrid1" Path="SelectedItem.SubjectID"/>
+                        <Binding ElementName="subject" Path="Text"/>
+                        <Binding ElementName="datagrid2" Path="SelectedItem.Person.PersonId"/>
+                        <Binding ElementName="datagrid2" Path="SelectedItem.Person.LastName"/>
+                        <Binding ElementName="datagrid2" Path="SelectedItem.Person.FirstName"/>
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
+
+            <Button Grid.Column="1" 
+                    Content="Sterge legatura" Style="{StaticResource myButtonStyle}"
+                    Command="{Binding DeleteLinkSP}">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource sp}">
+                        <Binding ElementName="datagrid1" Path="SelectedItem.SubjectID"/>
+                        <Binding ElementName="subject" Path="Text"/>
+                        <Binding ElementName="datagrid2" Path="SelectedItem.Person.PersonId"/>
+                        <Binding ElementName="datagrid2" Path="SelectedItem.Person.LastName"/>
+                        <Binding ElementName="datagrid2" Path="SelectedItem.Person.FirstName"/>
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.5*"/>
+                <ColumnDefinition Width="1.5*"/>
+                <ColumnDefinition Width="1.5*"/>
+                <ColumnDefinition Width="1.5*"/>
+
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Label Content="Denumire materie" HorizontalAlignment="Center"  Margin="30, 0,0,0"
+                        Grid.Row="0" Grid.Column="0"
+                       VerticalAlignment="Center"
+                        Foreground="White" 
+                       FontSize="20"
+                       FontFamily="Malgun Gothic"/>
+            <TextBox x:Name="subject"  Grid.Row="0" Grid.Column="1" Text="{Binding ElementName=datagrid1,
+                Path=SelectedItem.Name}" 
+                      HorizontalAlignment="Left"
+                         Width="150" VerticalAlignment="Center"/>
+
+            <Label Content="Profesor" HorizontalAlignment="Center" 
+                       VerticalAlignment="Center"
+                        Grid.Row="0" Grid.Column="2"
+                        Foreground="White" 
+                       FontSize="20"
+                       FontFamily="Malgun Gothic"/>
+
+            <TextBox   x:Name="prof"  Grid.Row="0" Grid.Column="3"
+                       HorizontalAlignment="Left"
+                      VerticalAlignment="Center"  Width="150"
+                      IsReadOnly="True">
+                <TextBox.Text>
+                    <MultiBinding StringFormat="{}{0} {1}">
+                        <Binding ElementName="datagrid2" Path="SelectedItem.Person.LastName" />
+                        <Binding ElementName="datagrid2" Path="SelectedItem.Person.FirstName"/>
+                    </MultiBinding>
+                </TextBox.Text>
+            </TextBox>
+        </Grid>
+
+
+        <TextBlock Text="{Binding Message}"
+                   VerticalAlignment="Center"
+                   Style="{StaticResource ResourceKey=text}"
+                   Foreground="Red" Grid.Row="4"/>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <DataGrid x:Name="datagrid1" Grid.Column="0" AutoGenerateColumns="False" Margin="50,10,50,10"
+                  ItemsSource="{Binding SubjectList, UpdateSourceTrigger=PropertyChanged}"
+                  ColumnWidth="*" IsReadOnly="True" SelectedItem="{Binding CurrentSubject}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Denumire materie" Binding="{Binding Name}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <DataGrid x:Name="datagrid2" Grid.Column="1" AutoGenerateColumns="False" Margin="50,10,50,10"
+                  ItemsSource="{Binding ProfList, UpdateSourceTrigger=PropertyChanged}"
+                  ColumnWidth="*" IsReadOnly="True" SelectedItem="{Binding CurrentProfessor}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Nume" Binding="{Binding Person.LastName}"/>
+                    <DataGridTextColumn Header="Prenume" Binding="{Binding Person.FirstName}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </Grid>
+    </Grid>
+</Page>

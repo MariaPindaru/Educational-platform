@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="158b87d02ba4493ab427bb96af7b168c" Name="Diagram1">
+        <EntityTypeShape EntityType="schoolModel.Admin" Width="1.5" PointX="5.25" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="schoolModel.Attendance" Width="1.5" PointX="12.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="schoolModel.AttendanceType" Width="1.5" PointX="10.5" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="schoolModel.AverageGrade" Width="1.5" PointX="15.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="schoolModel.Class" Width="1.5" PointX="7.5" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="schoolModel.Document" Width="1.5" PointX="10.5" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="schoolModel.Grade" Width="1.5" PointX="15.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="schoolModel.Person" Width="1.5" PointX="3" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="schoolModel.Prof_Subj_Class" Width="1.5" PointX="12.75" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="schoolModel.Professor" Width="1.5" PointX="5.25" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="schoolModel.Professor_Subject" Width="1.5" PointX="10.5" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="schoolModel.Registration" Width="1.5" PointX="0.75" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="schoolModel.Semester" Width="1.5" PointX="13.5" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="schoolModel.Specialization" Width="1.5" PointX="3" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="schoolModel.Student" Width="1.5" PointX="9.75" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="schoolModel.Subject" Width="1.5" PointX="8.25" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="schoolModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="schoolModel.Year" Width="1.5" PointX="3" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="schoolModel.Year_Specializaion" Width="1.5" PointX="5.25" PointY="13.625" IsExpanded="true" />
+        <AssociationConnector Association="schoolModel.FK__Admin__PersonID" ManuallyRouted="false" />
+        <AssociationConnector Association="schoolModel.FK_Attendance_AttendanceType" ManuallyRouted="false" />
+        <AssociationConnector Association="schoolModel.FK_Attendance_Professor_Subject" ManuallyRouted="false" />
+        <AssociationConnector Association="schoolModel.FK_Attendance_Semester" ManuallyRouted="false" />
+        <AssociationConnector Association="schoolModel.FK_Attendance_Student" ManuallyRouted="false" />
+        <AssociationConnector Association="schoolModel.FK_AverageGrade_Professor_Subject" ManuallyRouted="false" />
+        <AssociationConnector Association="schoolModel.FK_AverageGrade_Semester" ManuallyRouted="false" />
+        <AssociationConnector Association="schoolModel.FK_AverageGrade_Student" ManuallyRouted="false" />
+        <AssociationConnector Association="schoolModel.FK__Student__ClassID" ManuallyRouted="false" />
+        <AssociationConnector Association="schoolModel.FK_Class_HeadMaster" ManuallyRouted="false" />
+        <AssociationConnector Association="schoolModel.FK_Class_Year_Specializaion" ManuallyRouted="false" />
+        <AssociationConnector Association="schoolModel.FK_Grade_Prof_Subj_Class" ManuallyRouted="false" />
+        <AssociationConnector Association="schoolModel.FK_Grade_Semester" ManuallyRouted="false" />
+        <AssociationConnector Association="schoolModel.FK_Grade_Student" ManuallyRouted="false" />
+        <AssociationConnector Association="schoolModel.FK__Professor__PersonId" ManuallyRouted="false" />
+        <AssociationConnector Association="schoolModel.FK__Student__PersonID" ManuallyRouted="false" />
+        <AssociationConnector Association="schoolModel.FK_Person_Registration" ManuallyRouted="false" />
+        <AssociationConnector Association="schoolModel.FK_Prof_Subj_Class_Professor_Subject" ManuallyRouted="false" />
+        <AssociationConnector Association="schoolModel.FK_Prof_Subj_Class_Year_Specializaion" ManuallyRouted="false" />
+        <AssociationConnector Association="schoolModel.FK_Professor_Subject_Professor" ManuallyRouted="false" />
+        <AssociationConnector Association="schoolModel.FK_Professor_Subject_Subject" ManuallyRouted="false" />
+        <AssociationConnector Association="schoolModel.FK_Year_Specializaion_Specialization" ManuallyRouted="false" />
+        <AssociationConnector Association="schoolModel.FK_Year_Specializaion_Year" ManuallyRouted="false" />
+        <AssociationConnector Association="schoolModel.Document_ClassProfSubj" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

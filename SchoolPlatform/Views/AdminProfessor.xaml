@@ -1,0 +1,154 @@
+﻿<Page x:Class="SchoolPlatform.Views.AdminProfessor"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SchoolPlatform.ViewModels"
+      xmlns:localConverter="clr-namespace:SchoolPlatform.Converters"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AdminProfessor">
+    <Page.DataContext>
+        <local:AdminLogVM/>
+    </Page.DataContext>
+
+    <Page.Resources>
+        <localConverter:ProfessorConverter x:Key="profConv"/>
+        <Style x:Key="cellText" TargetType="{x:Type TextBlock}" >
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+
+        <Style x:Key="header" TargetType="DataGridColumnHeader">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="ClickMode" Value="Hover"/>
+        </Style>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" 
+                    Content="Profesor nou" Style="{StaticResource myButtonStyle}"
+                    Click="Button_Click"/>
+
+            <Button Grid.Column="1" 
+                   Content="Adauga profesor" Style="{StaticResource myButtonStyle}"
+                   Command="{Binding AddProfessor}" >
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource profConv}">
+                        <Binding ElementName="firstname" Path="Text"/>
+                        <Binding ElementName="lastname" Path="Text"/>
+                        <Binding ElementName="username" Path="Text"/>
+                        <Binding ElementName="datagrid" Path="SelectedItem.Person.PersonId"/>
+                        <Binding ElementName="password" Path="Text"/> 
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
+
+            <Button Grid.Column="2" 
+                    Content="Salveaza modificarile" Style="{StaticResource myButtonStyle}"
+                    Command="{Binding UpdateProfessor}">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource profConv}">
+                        <Binding ElementName="firstname" Path="Text"/>
+                        <Binding ElementName="lastname" Path="Text"/>
+                        <Binding ElementName="username" Path="Text"/>
+                        <Binding ElementName="datagrid" Path="SelectedItem.Person.PersonId"/>
+                        <Binding ElementName="password" Path="Text"/>
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
+
+            <Button Grid.Column="3" 
+                    Content="Sterge profesor" Style="{StaticResource myButtonStyle}"
+                    Command="{Binding DeleteProfessor}" CommandParameter="{Binding ElementName=datagrid, Path=SelectedItem}"/>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Label Content="Nume" HorizontalAlignment="Center" 
+                        Grid.Row="0" Grid.Column="0"
+                       VerticalAlignment="Center"
+                        Foreground="White" 
+                       FontSize="20"
+                       FontFamily="Malgun Gothic"/>
+            <TextBox Text="{Binding ElementName=datagrid, Path= SelectedItem.Person.LastName}" 
+                          Grid.Row="0" Grid.Column="1" x:Name="lastname"
+                         Width="150" VerticalAlignment="Center"/>
+
+            <Label Content="Prenume" HorizontalAlignment="Center" 
+                       VerticalAlignment="Center"
+                        Grid.Row="0" Grid.Column="2"
+                        Foreground="White" 
+                       FontSize="20"
+                       FontFamily="Malgun Gothic"/>
+            <TextBox Text="{Binding ElementName=datagrid, Path= SelectedItem.Person.FirstName}"
+                          Grid.Row="0" Grid.Column="3"  x:Name="firstname"
+                         Width="150" VerticalAlignment="Center"/>
+
+            <Label Content="Username" HorizontalAlignment="Center" 
+                       VerticalAlignment="Center"
+                        Grid.Row="1" Grid.Column="0"
+                        Foreground="White" 
+                       FontSize="20"
+                       FontFamily="Malgun Gothic"/>
+            <TextBox Text="{Binding ElementName=datagrid, Path= SelectedItem.Person.Username}"
+                      Grid.Row="1" Grid.Column="1"  x:Name="username"
+                     Width="150" VerticalAlignment="Center"/>
+
+            <Label Content="Parola" HorizontalAlignment="Center" 
+                       VerticalAlignment="Center"
+                        Grid.Row="1" Grid.Column="2"
+                        Foreground="White" 
+                       FontSize="20"
+                       FontFamily="Malgun Gothic"/>
+            <TextBox Text="{Binding ElementName=datagrid, Path= SelectedItem.Password}"
+                     Grid.Row="1" Grid.Column="3"  x:Name="password"
+                     Width="150" VerticalAlignment="Center"/>
+
+
+        </Grid>
+
+        <DataGrid x:Name="datagrid" Grid.Row="2" AutoGenerateColumns="False" 
+                  ItemsSource="{Binding ProfList, UpdateSourceTrigger=PropertyChanged}"
+                  ColumnWidth="*" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Nume" Binding="{Binding Person.LastName}"/>
+                <DataGridTextColumn Header="Prenume" Binding="{Binding Person.FirstName}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <TextBlock Text="{Binding Message}"
+                   VerticalAlignment="Center"
+                   Style="{StaticResource ResourceKey=text}"
+                   Foreground="Red" Grid.Row="3"/>
+    </Grid>
+</Page>

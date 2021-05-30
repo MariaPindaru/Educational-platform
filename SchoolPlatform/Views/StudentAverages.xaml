@@ -1,0 +1,41 @@
+﻿<Page x:Class="SchoolPlatform.Views.StudentAverages"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SchoolPlatform.ViewModels"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="StudentAverages">
+
+    <Page.DataContext>
+        <local:StudentLogVM/>
+    </Page.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center"
+               Foreground="White" 
+                       FontSize="20"
+                       FontFamily="Malgun Gothic">
+                <Run Text="Media generala: "/>
+                <Run Text="{Binding CurrentStudent.FinalAverage}"/>
+        </TextBlock>
+        <TextBlock />
+        <DataGrid x:Name="datagrid" AutoGenerateColumns="False" 
+                  ItemsSource="{Binding CurrentStudent.AverageGradeListCombined, UpdateSourceTrigger=PropertyChanged}"
+                  ColumnWidth="*" IsReadOnly="True" Grid.Row="1">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Materie" Binding="{Binding Item1.Subj.Name}"/>
+                <DataGridTextColumn Header="Media semestrul I" Binding="{Binding Item1.Grade}"/>
+                <DataGridTextColumn Header="Media semestrul II" Binding="{Binding Item2.Grade}"/>
+                <DataGridTextColumn Header="Media pe an" Binding="{Binding Item3}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>
+
