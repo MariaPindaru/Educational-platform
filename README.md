@@ -1,4 +1,4 @@
-# Educational-platfrom
+# Educational-platform
 
 ## About
 An educational platform developed with C#, WPF and SQL Server 2017 following the MVVM structure.
